@@ -1,0 +1,3533 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShajShare — Peer-to-Peer Wedding Outfit Rental Marketplace in Bangladesh</title>
+  <meta name="description" content="Wear the wedding look you love. Pay a fraction. Rent verified bridal, groom, holud, and guest wedding outfits across Bangladesh or earn from your wardrobe." />
+
+  <!-- Google Fonts: Cormorant Garamond (600, 700) & Poppins (400, 500, 600) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & CSS VARIABLES
+       ========================================================================== */
+    :root {
+      --color-maroon: #7B1E3A;
+      --color-maroon-dark: #5C142A;
+      --color-maroon-light: #96294A;
+      --color-gold: #C9A24B;
+      --color-gold-dark: #A68232;
+      --color-gold-soft: rgba(201, 162, 75, 0.16);
+      --color-ivory: #FFF8EE;
+      --color-blush: #F4DADA;
+      --color-blush-soft: #FAF0F0;
+      --color-charcoal: #2B2B2B;
+      --color-muted: #595252;
+      --color-sage: #5E7F6B;
+      --color-sage-soft: rgba(94, 127, 107, 0.14);
+      --color-white: #FFFFFF;
+      --color-border: rgba(123, 30, 58, 0.14);
+
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --radius: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 4px 14px rgba(123, 30, 58, 0.06);
+      --shadow-md: 0 10px 28px rgba(123, 30, 58, 0.10);
+      --shadow-lg: 0 20px 48px rgba(43, 43, 43, 0.16);
+      --transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE TYPOGRAPHY
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-charcoal);
+      background-color: var(--color-ivory);
+      overflow-x: hidden;
+      padding-bottom: 72px; /* Space for mobile sticky bottom bar */
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 0;
+      }
+    }
+
+    h1, h2, h3, h4, .font-serif {
+      font-family: var(--font-heading);
+      color: var(--color-maroon);
+      line-height: 1.18;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem); /* 40px - 56px */
+      letter-spacing: -0.01em;
+    }
+
+    h2 {
+      font-size: 2rem; /* 32px */
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.375rem; /* 22px */
+      font-weight: 600;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button, input, select, textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-charcoal);
+    }
+
+    /* Accessible Focus Rings */
+    :focus-visible {
+      outline: 3px solid var(--color-gold);
+      outline-offset: 2px;
+    }
+
+    /* ==========================================================================
+       3. LAYOUT UTILITIES & DECORATIVE ELEMENTS
+       ========================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .section-blush {
+      background-color: var(--color-blush-soft);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 2.75rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-gold-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .gold-divider {
+      width: 84px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+      margin: 0.85rem auto 1rem;
+      position: relative;
+    }
+
+    .gold-divider::after {
+      content: "❖";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--color-ivory);
+      padding: 0 0.45rem;
+      font-size: 0.75rem;
+      color: var(--color-gold);
+    }
+
+    .section-blush .gold-divider::after {
+      background: var(--color-blush-soft);
+    }
+
+    /* Buttons (Minimum 44px touch target) */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 46px;
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1.5px solid transparent;
+      text-align: center;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background-color: var(--color-maroon);
+      color: var(--color-white);
+      box-shadow: 0 6px 18px rgba(123, 30, 58, 0.22);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-maroon-dark);
+      border-color: var(--color-gold);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(123, 30, 58, 0.28);
+    }
+
+    .btn-outline {
+      background-color: var(--color-white);
+      color: var(--color-maroon);
+      border-color: var(--color-gold);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--color-gold-soft);
+      border-color: var(--color-maroon);
+      transform: translateY(-2px);
+    }
+
+    .btn-gold {
+      background-color: var(--color-gold);
+      color: #1F1707;
+      font-weight: 600;
+    }
+
+    .btn-gold:hover {
+      background-color: #B9923C;
+      transform: translateY(-2px);
+    }
+
+    .btn-sm {
+      min-height: 44px;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* Badges */
+    .badge-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background-color: var(--color-sage);
+      color: var(--color-white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-type {
+      display: inline-block;
+      background-color: rgba(255, 248, 238, 0.94);
+      color: var(--color-maroon);
+      border: 1px solid var(--color-gold);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      text-transform: capitalize;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      background-color: #FFF3D6;
+      border: 1px solid var(--color-gold);
+      border-left: 4px solid var(--color-maroon);
+      color: #4A2B00;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ==========================================================================
+       4. HEADER & NAVIGATION
+       ========================================================================== */
+    .top-announcement {
+      background-color: var(--color-maroon);
+      color: var(--color-ivory);
+      font-size: 0.8125rem;
+      text-align: center;
+      padding: 0.45rem 1rem;
+      border-bottom: 1px solid rgba(201, 162, 75, 0.35);
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background-color: rgba(255, 248, 238, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201, 162, 75, 0.35);
+      transition: var(--transition);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 1rem;
+    }
+
+    /* Original Brand Logo */
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--color-maroon);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-crest {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--color-maroon), var(--color-maroon-dark));
+      border: 1.5px solid var(--color-gold);
+      display: grid;
+      place-items: center;
+      color: var(--color-gold);
+      font-size: 1.1rem;
+      box-shadow: 0 3px 10px rgba(123, 30, 58, 0.2);
+    }
+
+    .brand-logo span.gold-text {
+      color: var(--color-gold-dark);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 1.65rem;
+      list-style: none;
+    }
+
+    @media (min-width: 960px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-links a {
+      font-size: 0.925rem;
+      font-weight: 500;
+      color: var(--color-charcoal);
+      padding: 0.4rem 0;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--color-gold);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-maroon);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 960px) {
+      .nav-actions {
+        display: flex;
+      }
+    }
+
+    .hamburger-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-gold);
+      background: var(--color-white);
+      color: var(--color-maroon);
+      cursor: pointer;
+    }
+
+    @media (min-width: 960px) {
+      .hamburger-btn {
+        display: none;
+      }
+    }
+
+    /* Mobile Drawer Menu */
+    .mobile-menu {
+      display: none;
+      background-color: var(--color-white);
+      border-bottom: 2px solid var(--color-gold);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 0.75rem 0.9rem;
+      border-radius: 8px;
+      font-weight: 500;
+      min-height: 44px;
+    }
+
+    .mobile-menu a:hover {
+      background-color: var(--color-blush-soft);
+      color: var(--color-maroon);
+    }
+
+    /* ==========================================================================
+       5. HERO & STATS STRIP
+       ========================================================================== */
+    .hero {
+      padding: 3.5rem 0 4rem;
+      background:
+        radial-gradient(circle at 90% 15%, rgba(201, 162, 75, 0.16), transparent 42%),
+        radial-gradient(circle at 10% 85%, rgba(244, 218, 218, 0.55), transparent 48%),
+        var(--color-ivory);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 920px) {
+      .hero-grid {
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 3rem;
+      }
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--color-blush);
+      color: var(--color-maroon);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(123, 30, 58, 0.15);
+      margin-bottom: 1.15rem;
+    }
+
+    .hero-subline {
+      font-size: 1.125rem;
+      color: var(--color-muted);
+      margin: 1.25rem 0 1.85rem;
+      max-width: 540px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.875rem;
+      color: var(--color-muted);
+    }
+
+    .hero-trust-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+    }
+
+    /* Hero Editorial Collage Card */
+    .hero-showcase {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .hero-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 0.65rem;
+      border: 1px solid rgba(201, 162, 75, 0.4);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .hero-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .hero-card.offset {
+      transform: translateY(1.25rem);
+    }
+
+    .hero-card.offset:hover {
+      transform: translateY(0.85rem);
+    }
+
+    .hero-card-visual {
+      height: 220px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.85rem;
+      color: var(--color-white);
+    }
+
+    @media (min-width: 640px) {
+      .hero-card-visual {
+        height: 265px;
+      }
+    }
+
+    .hero-card-caption {
+      padding: 0.65rem 0.35rem 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .hero-floating-tag {
+      position: absolute;
+      bottom: -0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-maroon);
+      color: var(--color-ivory);
+      border: 1.5px solid var(--color-gold);
+      padding: 0.55rem 1.15rem;
+      border-radius: 999px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      white-space: nowrap;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Stats Strip */
+    .stats-strip {
+      background-color: var(--color-maroon);
+      color: var(--color-ivory);
+      padding: 1.75rem 0;
+      border-top: 2px solid var(--color-gold);
+      border-bottom: 2px solid var(--color-gold);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      padding: 0.5rem;
+    }
+
+    .stat-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(201, 162, 75, 0.18);
+      border: 1px solid var(--color-gold);
+      display: grid;
+      place-items: center;
+      color: var(--color-gold);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .stat-text {
+      text-align: left;
+    }
+
+    .stat-title {
+      font-family: var(--font-heading);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--color-white);
+      line-height: 1.15;
+    }
+
+    .stat-desc {
+      font-size: 0.85rem;
+      color: rgba(255, 248, 238, 0.85);
+    }
+
+    /* ==========================================================================
+       6. OUTFIT CARDS & CATALOG GRID
+       ========================================================================== */
+    .outfit-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .outfit-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .outfit-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .outfit-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .outfit-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-gold);
+    }
+
+    .card-media {
+      position: relative;
+      height: 270px;
+      overflow: hidden;
+      background-color: var(--color-blush);
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .outfit-card:hover .card-media img {
+      transform: scale(1.06);
+    }
+
+    .card-badges-top {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      right: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .card-city-pill {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      background: rgba(43, 43, 43, 0.78);
+      backdrop-filter: blur(4px);
+      color: var(--color-white);
+      font-size: 0.75rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.825rem;
+      color: var(--color-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-rating {
+      color: #8A6214;
+      font-weight: 600;
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-maroon);
+      margin-bottom: 0.5rem;
+      line-height: 1.25;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .tag-chip {
+      font-size: 0.76rem;
+      background-color: var(--color-ivory);
+      border: 1px solid rgba(123, 30, 58, 0.14);
+      padding: 0.18rem 0.55rem;
+      border-radius: 6px;
+      color: var(--color-charcoal);
+    }
+
+    .card-pricing {
+      margin-top: auto;
+      padding-top: 0.85rem;
+      border-top: 1px dashed rgba(201, 162, 75, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 0.9rem;
+    }
+
+    .price-main {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--color-maroon);
+    }
+
+    .price-main small {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--color-muted);
+    }
+
+    .price-deposit {
+      font-size: 0.78rem;
+      color: var(--color-sage);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    /* ==========================================================================
+       7. FILTER BAR (COLLAPSIBLE ON MOBILE)
+       ========================================================================== */
+    .filter-wrapper {
+      background-color: var(--color-white);
+      border: 1px solid rgba(201, 162, 75, 0.45);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-mobile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 900px) {
+      .filter-mobile-header {
+        display: none;
+      }
+    }
+
+    .filter-panel {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .filter-panel.open {
+      display: block;
+    }
+
+    @media (min-width: 900px) {
+      .filter-panel {
+        display: block;
+        margin-top: 0;
+      }
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+
+    @media (min-width: 600px) {
+      .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .filter-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-maroon);
+    }
+
+    .form-control {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.55rem 0.8rem;
+      border-radius: 10px;
+      border: 1px solid rgba(123, 30, 58, 0.24);
+      background-color: var(--color-white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-maroon);
+      box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.25);
+    }
+
+    .filter-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(123, 30, 58, 0.1);
+    }
+
+    .results-count {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-muted);
+    }
+
+    .sort-box {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* ==========================================================================
+       8. MINI HOW IT WORKS, TESTIMONIALS & TRUST CARDS
+       ========================================================================== */
+    .steps-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .steps-grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .steps-grid-4 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .steps-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .steps-grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .step-card {
+      background-color: var(--color-white);
+      border: 1px solid rgba(201, 162, 75, 0.35);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .step-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--color-gold);
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--color-maroon);
+      color: var(--color-gold);
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      margin-bottom: 1rem;
+      border: 1.5px solid var(--color-gold);
+    }
+
+    .testimonial-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius);
+      padding: 1.65rem;
+      border: 1px solid rgba(123, 30, 58, 0.12);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .testimonial-quote {
+      font-style: italic;
+      color: var(--color-charcoal);
+      margin-bottom: 1.25rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-top: 1px solid var(--color-blush);
+      padding-top: 0.85rem;
+    }
+
+    .author-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--color-blush);
+      color: var(--color-maroon);
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--color-gold);
+      flex-shrink: 0;
+    }
+
+    /* Trust Grid */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .trust-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .trust-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .trust-card {
+      background: var(--color-white);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.15rem;
+      border: 1px solid rgba(94, 127, 107, 0.28);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .trust-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background-color: var(--color-sage-soft);
+      color: var(--color-sage);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 0.85rem;
+      font-size: 1.3rem;
+    }
+
+    /* ==========================================================================
+       9. FAQ ACCORDION
+       ========================================================================== */
+    .faq-list {
+      max-width: 840px;
+      margin: 2.5rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .faq-item {
+      background-color: var(--color-white);
+      border: 1px solid rgba(123, 30, 58, 0.16);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      min-height: 54px;
+      padding: 1rem 1.25rem;
+      background: none;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-maroon);
+      cursor: pointer;
+    }
+
+    .faq-question:hover {
+      background-color: var(--color-blush-soft);
+    }
+
+    .faq-icon {
+      font-size: 1.25rem;
+      color: var(--color-gold-dark);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.25rem;
+      color: var(--color-muted);
+      font-size: 0.95rem;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 260px;
+      padding: 0 1.25rem 1.2rem;
+      border-top: 1px solid rgba(201, 162, 75, 0.25);
+    }
+
+    /* ==========================================================================
+       10. LIST YOUR OUTFIT (EARNINGS CALCULATOR + DEMO FORM)
+       ========================================================================== */
+    .lender-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (min-width: 920px) {
+      .lender-split {
+        grid-template-columns: 1fr 1.1fr;
+      }
+    }
+
+    .calculator-card, .form-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 1.85rem;
+      border: 1px solid rgba(201, 162, 75, 0.45);
+      box-shadow: var(--shadow-md);
+    }
+
+    .earnings-output {
+      margin-top: 1.5rem;
+      padding: 1.35rem;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--color-maroon), var(--color-maroon-dark));
+      color: var(--color-ivory);
+      border: 1.5px solid var(--color-gold);
+    }
+
+    .earnings-figure {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-gold);
+      line-height: 1.1;
+      margin: 0.35rem 0;
+    }
+
+    .range-slider {
+      width: 100%;
+      accent-color: var(--color-maroon);
+      height: 8px;
+      cursor: pointer;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 560px) {
+      .form-row-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .photo-dropzone {
+      border: 2px dashed var(--color-gold);
+      background-color: var(--color-ivory);
+      border-radius: var(--radius);
+      padding: 1.15rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .photo-dropzone:hover {
+      background-color: var(--color-blush-soft);
+    }
+
+    /* ==========================================================================
+       11. ACCOUNT / POST-PURCHASE SECTION
+       ========================================================================== */
+    .account-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 900px) {
+      .account-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .account-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(123, 30, 58, 0.08);
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .checklist-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--color-sage);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .checklist-item.checked span {
+      text-decoration: line-through;
+      color: var(--color-muted);
+    }
+
+    .star-selector {
+      display: inline-flex;
+      gap: 0.35rem;
+      margin: 0.4rem 0 0.85rem;
+    }
+
+    .star-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      border: 1px solid var(--color-gold);
+      background: var(--color-ivory);
+      font-size: 1.3rem;
+      color: #C4B8A5;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .star-btn.active {
+      color: #D49B1A;
+      background-color: #FFF4D4;
+      border-color: var(--color-maroon);
+    }
+
+    /* ==========================================================================
+       12. MODALS (OUTFIT DETAIL & DEMO CHECKOUT)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(28, 12, 18, 0.68);
+      backdrop-filter: blur(4px);
+      z-index: 1100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 900px;
+      max-height: 92vh;
+      overflow-y: auto;
+      border: 1.5px solid var(--color-gold);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+
+    .modal-dialog.modal-sm {
+      max-width: 620px;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(14px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: var(--color-ivory);
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(201, 162, 75, 0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .modal-close {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--color-maroon);
+      background: var(--color-white);
+      color: var(--color-maroon);
+      font-size: 1.35rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .modal-close:hover {
+      background-color: var(--color-maroon);
+      color: var(--color-white);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    @media (min-width: 768px) {
+      .detail-grid {
+        grid-template-columns: 1fr 1.15fr;
+      }
+    }
+
+    .gallery-main {
+      height: 340px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--color-gold);
+      background-color: var(--color-blush);
+    }
+
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: 0.65rem;
+      margin-top: 0.75rem;
+    }
+
+    .thumb-btn {
+      width: 68px;
+      height: 68px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      padding: 0;
+      cursor: pointer;
+      background: none;
+    }
+
+    .thumb-btn.active {
+      border-color: var(--color-maroon);
+    }
+
+    .thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .price-breakdown-box {
+      background-color: var(--color-ivory);
+      border: 1px solid rgba(201, 162, 75, 0.55);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      font-size: 0.925rem;
+    }
+
+    .breakdown-row.total {
+      border-top: 1px solid rgba(123, 30, 58, 0.2);
+      margin-top: 0.45rem;
+      padding-top: 0.65rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--color-maroon);
+    }
+
+    /* Payment Options */
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin: 0.65rem 0 1.25rem;
+    }
+
+    .pay-option {
+      min-height: 52px;
+      border: 1.5px solid rgba(123, 30, 58, 0.24);
+      border-radius: 10px;
+      background-color: var(--color-white);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .pay-option.selected {
+      border-color: var(--color-maroon);
+      background-color: var(--color-blush-soft);
+      box-shadow: 0 0 0 2px var(--color-gold);
+    }
+
+    /* ==========================================================================
+       13. FOOTER & STICKY MOBILE BOTTOM BAR
+       ========================================================================== */
+    .footer {
+      background-color: #2B131B;
+      color: rgba(255, 248, 238, 0.88);
+      padding: 4rem 0 2rem;
+      border-top: 3px solid var(--color-gold);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1.4fr 1fr 1fr 1.1fr;
+      }
+    }
+
+    .footer h4 {
+      color: var(--color-gold);
+      font-size: 1.25rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .footer ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+    }
+
+    .footer a:hover {
+      color: var(--color-gold);
+    }
+
+    .social-row {
+      display: flex;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+
+    .social-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--color-gold);
+      display: grid;
+      place-items: center;
+      color: var(--color-ivory);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      background-color: var(--color-gold);
+      color: #2B131B;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(201, 162, 75, 0.25);
+      padding-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.825rem;
+      color: rgba(255, 248, 238, 0.72);
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    /* Sticky Mobile Bottom CTA Bar */
+    .mobile-sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 880;
+      background-color: var(--color-white);
+      border-top: 1.5px solid var(--color-gold);
+      padding: 0.55rem 0.85rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      box-shadow: 0 -6px 20px rgba(43, 43, 43, 0.12);
+    }
+
+    @media (min-width: 768px) {
+      .mobile-sticky-bar {
+        display: none;
+      }
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 84px;
+      right: 1rem;
+      z-index: 1200;
+      background-color: var(--color-maroon);
+      color: var(--color-white);
+      border: 1.5px solid var(--color-gold);
+      padding: 0.85rem 1.2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.9rem;
+      display: none;
+      max-width: 340px;
+    }
+
+    @media (min-width: 768px) {
+      .toast {
+        bottom: 1.5rem;
+      }
+    }
+
+    .toast.show {
+      display: block;
+      animation: modalFadeIn 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Trust Announcement Bar -->
+  <div class="top-announcement">
+    ✨ Bangladesh’s Peer-to-Peer Wedding Wardrobe • ID-Verified Lenders • Ozone &amp; Steam Sanitized Before Every Delivery
+  </div>
+
+  <!-- Sticky Header Navigation -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="brand-logo" aria-label="ShajShare Home">
+        <span class="brand-crest" aria-hidden="true">✦</span>
+        <span>Shaj<span class="gold-text">Share</span></span>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#browse">Browse Outfits</a></li>
+          <li><a href="#how-it-works">How It Works &amp; Trust</a></li>
+          <li><a href="#list-outfit" class="utm-list-link">List Your Outfit</a></li>
+          <li><a href="#account">My Rental</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#list-outfit" class="btn btn-outline btn-sm utm-list-link">List Your Outfit</a>
+        <a href="#browse" class="btn btn-primary btn-sm">Browse Outfits</a>
+      </div>
+
+      <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle Navigation Menu">
+        ☰
+      </button>
+    </div>
+
+    <!-- Collapsible Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#home" class="mobile-nav-link">Home</a></li>
+        <li><a href="#browse" class="mobile-nav-link">Browse Outfits (14+ Styles)</a></li>
+        <li><a href="#how-it-works" class="mobile-nav-link">How It Works &amp; Safety</a></li>
+        <li><a href="#list-outfit" class="mobile-nav-link utm-list-link">List Your Outfit &amp; Earn</a></li>
+        <li><a href="#account" class="mobile-nav-link">Post-Purchase &amp; Return</a></li>
+      </ul>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+        <a href="#browse" class="btn btn-primary btn-sm mobile-nav-link">Browse Outfits</a>
+        <a href="#list-outfit" class="btn btn-outline btn-sm mobile-nav-link utm-list-link">List Your Outfit</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         1. HOME SECTION (AWARENESS)
+         ====================================================================== -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="hero-pill">🇧🇩 Dhaka • Chattogram • Sylhet • Rajshahi</div>
+          <h1>Wear the wedding look you love. Pay a fraction.</h1>
+          <p class="hero-subline">
+            Rent from verified owners. Or earn from the outfit in your cupboard.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="#browse" class="btn btn-primary">Browse Outfits</a>
+            <a href="#list-outfit" class="btn btn-outline utm-list-link">List Your Outfit</a>
+          </div>
+
+          <div class="hero-trust-row">
+            <span>🛡️ NID &amp; Phone Verified Lenders</span>
+            <span>✨ Dry-Cleaned &amp; Sealed</span>
+            <span>💸 100% Refundable Deposit</span>
+          </div>
+        </div>
+
+        <!-- Editorial Bridal & Groom Visual Collage -->
+        <div class="hero-showcase" aria-label="Featured Bangladeshi Wedding Attire Preview">
+          <article class="hero-card">
+            <div class="hero-card-visual" style="background: linear-gradient(160deg, #7B1E3A 0%, #4A0E20 65%, #C9A24B 140%);">
+              <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80" alt="Crimson Zardozi Bridal Lehenga worn at a Dhaka reception" loading="eager" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.88;" onerror="this.style.display='none'" />
+              <div style="position:relative; z-index:2; background:rgba(43,19,27,0.75); padding:0.45rem 0.65rem; border-radius:8px; width:100%;">
+                <div style="font-family:var(--font-heading); font-size:1.05rem; font-weight:700;">Zardozi Bridal Lehenga</div>
+                <div style="font-size:0.75rem; color:#F4DADA;">Retail ৳85,000 → Rent ৳6,500</div>
+              </div>
+            </div>
+            <div class="hero-card-caption">
+              <span class="badge-verified">✓ Verified</span>
+              <span style="font-weight:600; color:var(--color-maroon);">Save 92%</span>
+            </div>
+          </article>
+
+          <article class="hero-card offset">
+            <div class="hero-card-visual" style="background: linear-gradient(160deg, #233D32 0%, #5E7F6B 75%, #C9A24B 135%);">
+              <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=600&q=80" alt="Ivory & Antique Gold Groom Sherwani Set" loading="eager" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.88;" onerror="this.style.display='none'" />
+              <div style="position:relative; z-index:2; background:rgba(43,19,27,0.75); padding:0.45rem 0.65rem; border-radius:8px; width:100%;">
+                <div style="font-family:var(--font-heading); font-size:1.05rem; font-weight:700;">Royal Ivory Sherwani</div>
+                <div style="font-size:0.75rem; color:#F4DADA;">Retail ৳42,000 → Rent ৳3,800</div>
+              </div>
+            </div>
+            <div class="hero-card-caption">
+              <span class="badge-verified">✓ Verified</span>
+              <span style="font-weight:600; color:var(--color-maroon);">3-Day Rental</span>
+            </div>
+          </article>
+
+          <div class="hero-floating-tag">
+            ★ 4.9/5 Rated by 1,200+ Wedding Guests &amp; Brides
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Strip -->
+    <section class="stats-strip" aria-label="Marketplace Highlights">
+      <div class="container stats-grid">
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">🏷️</div>
+          <div class="stat-text">
+            <div class="stat-title">Save up to 70%</div>
+            <div class="stat-desc">Designer &amp; custom outfits at a fraction of retail</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">🛡️</div>
+          <div class="stat-text">
+            <div class="stat-title">Verified lenders</div>
+            <div class="stat-desc">Every wardrobe owner passes NID &amp; quality checks</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">✨</div>
+          <div class="stat-text">
+            <div class="stat-title">Cleaned after every rental</div>
+            <div class="stat-desc">Eco-safe dry cleaning &amp; steam sanitization included</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Outfits Grid (6 Cards) -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Curated Wedding Edit</span>
+          <h2>Featured Outfits Ready for Your Next Dawat</h2>
+          <div class="gold-divider"></div>
+          <p>Handpicked bridal lehengas, groom sherwanis, holud ensembles, and heirloom Jamdani sarees from verified closets across Bangladesh.</p>
+        </div>
+
+        <div class="outfit-grid" id="featuredGrid">
+          <!-- Populated dynamically via JS from sample dataset -->
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="#browse" class="btn btn-primary">Explore All 14+ Wedding Outfits →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mini How It Works (3 Steps) -->
+    <section class="section section-blush">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Effortless &amp; Transparent</span>
+          <h2>How ShajShare Works</h2>
+          <div class="gold-divider"></div>
+          <p>From finding your dream outfit to doorstep return, every step is protected.</p>
+        </div>
+
+        <div class="steps-grid-3">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Choose &amp; Reserve Dates</h3>
+            <p style="margin-top:0.5rem; color:var(--color-muted);">Filter by event (Biye, Holud, Mehendi, Walima), size, and city. Lock your 3-day rental window online.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Wear Ready-to-Shine Attire</h3>
+            <p style="margin-top:0.5rem; color:var(--color-muted);">Your outfit arrives dry-cleaned, steamed, and sealed in a garment bag with blouse/dupatta pieces checked.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Easy Return &amp; Deposit Refund</h3>
+            <p style="margin-top:0.5rem; color:var(--color-muted);">Pack it back—no washing needed! Once inspected, your 100% refundable deposit returns within 48 hours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Community Stories</span>
+          <h2>Loved by Brides, Guests &amp; Wardrobe Lenders</h2>
+          <div class="gold-divider"></div>
+        </div>
+
+        <div class="steps-grid-3">
+          <article class="testimonial-card">
+            <p class="testimonial-quote">“I wore a heavy maroon zardozi lehenga for my cousin’s Gulshan reception for ৳5,500 instead of spending ৳65,000 on something I’d wear once. It smelled fresh and looked brand new!”</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">NT</div>
+              <div>
+                <div style="font-weight:600; color:var(--color-maroon);">Nusrat Tabassum</div>
+                <div style="font-size:0.82rem; color:var(--color-muted);">Renter • Dhanmondi, Dhaka</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card">
+            <p class="testimonial-quote">“My bridal reception lehenga was sitting untouched in my closet for two years. Listing it on ShajShare earned me ৳24,000 this winter wedding season with zero hassle.”</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">FR</div>
+              <div>
+                <div style="font-weight:600; color:var(--color-maroon);">Farhana Rahman</div>
+                <div style="font-size:0.82rem; color:var(--color-muted);">Verified Lender • Khulshi, Chattogram</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card">
+            <p class="testimonial-quote">“Needed an emerald velvet sherwani for a destination wedding in Sylhet. Booked in 5 minutes, got exact chest &amp; sleeve measurements from the owner, and my deposit was refunded right on time.”</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">TA</div>
+              <div>
+                <div style="font-weight:600; color:var(--color-maroon);">Tanvir Ahmed</div>
+                <div style="font-size:0.82rem; color:var(--color-muted);">Groom &amp; Renter • Zindabazar, Sylhet</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         2. BROWSE OUTFITS SECTION (CONSIDERATION)
+         ====================================================================== -->
+    <section id="browse" class="section section-blush">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Explore Marketplace</span>
+          <h2>Browse Verified Wedding Outfits</h2>
+          <div class="gold-divider"></div>
+          <p>Filter by occasion, size, colour, city, or rental date. All prices shown are for a complete 3-day wedding rental.</p>
+        </div>
+
+        <!-- Interactive Filter & Sort Bar -->
+        <div class="filter-wrapper">
+          <div class="filter-mobile-header">
+            <span style="font-weight:600; color:var(--color-maroon);">Filter &amp; Search Outfits</span>
+            <button type="button" class="btn btn-outline btn-sm" id="toggleFiltersBtn" aria-expanded="false" aria-controls="filterPanel">
+              ⚙️ Show Filters
+            </button>
+          </div>
+
+          <div class="filter-panel" id="filterPanel">
+            <div class="filter-grid">
+              <div class="form-group">
+                <label class="form-label" for="filterType">Occasion / Type</label>
+                <select id="filterType" class="form-control">
+                  <option value="all">All Types</option>
+                  <option value="bridal">Bridal</option>
+                  <option value="groom">Groom</option>
+                  <option value="guest">Wedding Guest</option>
+                  <option value="holud/mehendi">Holud / Mehendi</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="filterSize">Size</label>
+                <select id="filterSize" class="form-control">
+                  <option value="all">All Sizes</option>
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="Free Size">Free Size (Saree)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="filterColour">Colour</label>
+                <select id="filterColour" class="form-control">
+                  <option value="all">All Colours</option>
+                  <option value="Maroon">Maroon &amp; Crimson</option>
+                  <option value="Gold">Antique Gold &amp; Mustard</option>
+                  <option value="Emerald">Emerald Green</option>
+                  <option value="Pastel Pink">Pastel Pink &amp; Rose</option>
+                  <option value="Ivory">Ivory &amp; Off-White</option>
+                  <option value="Navy">Royal Navy</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="filterPrice">Max 3-Day Rent</label>
+                <select id="filterPrice" class="form-control">
+                  <option value="99999">Any Price</option>
+                  <option value="2500">Up to ৳2,500</option>
+                  <option value="4000">Up to ৳4,000</option>
+                  <option value="6000">Up to ৳6,000</option>
+                  <option value="8000">Up to ৳8,000</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="filterCity">City</label>
+                <select id="filterCity" class="form-control">
+                  <option value="all">All Cities</option>
+                  <option value="Dhaka">Dhaka</option>
+                  <option value="Chattogram">Chattogram</option>
+                  <option value="Sylhet">Sylhet</option>
+                  <option value="Rajshahi">Rajshahi</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="filterDate">Event Start Date</label>
+                <input type="date" id="filterDate" class="form-control" />
+              </div>
+            </div>
+
+            <div class="filter-toolbar">
+              <div class="results-count" id="resultsCount">Showing 14 verified outfits</div>
+
+              <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.75rem;">
+                <div class="sort-box">
+                  <label for="sortBy" style="font-size:0.85rem; font-weight:500;">Sort by:</label>
+                  <select id="sortBy" class="form-control" style="width:auto; min-width:170px;">
+                    <option value="featured">Featured First</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating-desc">Highest Rated</option>
+                  </select>
+                </div>
+
+                <button type="button" class="btn btn-outline btn-sm" id="resetFiltersBtn">Reset Filters</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtered Outfit Cards Grid -->
+        <div class="outfit-grid" id="catalogGrid">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyCatalogState" style="display:none; text-align:center; padding:3rem 1rem; background:var(--color-white); border-radius:var(--radius); border:1px dashed var(--color-gold);">
+          <h3>No outfits match those exact filters</h3>
+          <p style="color:var(--color-muted); margin:0.5rem 0 1.25rem;">Try broadening your price range, city, or colour selection.</p>
+          <button type="button" class="btn btn-primary" id="emptyResetBtn">Clear All Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. HOW IT WORKS + TRUST & SAFETY + FAQ (CONSIDERATION / DECISION)
+         ====================================================================== -->
+    <section id="how-it-works" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Worry-Free Wedding Rentals</span>
+          <h2>4 Simple Steps &amp; Our Trust Promise</h2>
+          <div class="gold-divider"></div>
+          <p>Designed around Bangladeshi wedding timelines, custom tailoring sensitivity, and hygiene standards.</p>
+        </div>
+
+        <!-- 4 Detailed Steps -->
+        <div class="steps-grid-4">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <h3>Browse</h3>
+            <p style="font-size:0.92rem; color:var(--color-muted); margin-top:0.4rem;">Explore verified closets by event type, exact chest/waist measurements, and city.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <h3>Book</h3>
+            <p style="font-size:0.92rem; color:var(--color-muted); margin-top:0.4rem;">Reserve your 3-day window with a low rental fee plus a 100% refundable security deposit.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <h3>Wear</h3>
+            <p style="font-size:0.92rem; color:var(--color-muted); margin-top:0.4rem;">Receive your sanitized outfit 1 day prior to your event. Celebrate in style and take unforgettable photos.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <h3>Return</h3>
+            <p style="font-size:0.92rem; color:var(--color-muted); margin-top:0.4rem;">Hand the sealed garment bag to our rider on Day 4. We handle dry cleaning and refund your deposit.</p>
+          </div>
+        </div>
+
+        <!-- 5 Trust & Safety Cards -->
+        <div class="trust-grid">
+          <div class="trust-card">
+            <div class="trust-icon" aria-hidden="true">🪪</div>
+            <h3 style="font-size:1.15rem;">Verified Listings</h3>
+            <p style="font-size:0.84rem; color:var(--color-muted); margin-top:0.35rem;">NID verification and live video garment inspection for every lender.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon" aria-hidden="true">🔒</div>
+            <h3 style="font-size:1.15rem;">Refundable Deposit</h3>
+            <p style="font-size:0.84rem; color:var(--color-muted); margin-top:0.35rem;">Held safely in escrow and refunded via bKash/Nagad/Bank within 48 hrs of return.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon" aria-hidden="true">🧼</div>
+            <h3 style="font-size:1.15rem;">Professional Cleaning</h3>
+            <p style="font-size:0.84rem; color:var(--color-muted); margin-top:0.35rem;">Delicate zardozi &amp; silk dry-cleaning + steam sanitization after every single wear.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon" aria-hidden="true">🪡</div>
+            <h3 style="font-size:1.15rem;">Damage Policy</h3>
+            <p style="font-size:0.84rem; color:var(--color-muted); margin-top:0.35rem;">Minor hem dust, loose hooks, or small stains are covered under our 5% service fee.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon" aria-hidden="true">💬</div>
+            <h3 style="font-size:1.15rem;">Support Promise</h3>
+            <p style="font-size:0.84rem; color:var(--color-muted); margin-top:0.35rem;">Backup outfit replacement guarantee if a sizing issue occurs before your event.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Accordion (8 Questions) -->
+        <div style="margin-top:4rem;" id="faq">
+          <div class="section-header" style="margin-bottom:1.5rem;">
+            <span class="eyebrow">Got Questions?</span>
+            <h2>Frequently Asked Questions</h2>
+            <div class="gold-divider"></div>
+          </div>
+
+          <div class="faq-list" id="faqAccordion">
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>1. How does the 3-day rental period work?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Your 3-day rental covers Day 1 (delivery before your function), Day 2 (your main wedding/holud event), and Day 3 (afternoon/evening pickup). Need 5 days for a destination wedding outside Dhaka? You can extend at 25% per extra day.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>2. How is my refundable security deposit protected?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Your security deposit is held securely by ShajShare—not transferred directly to the lender—until the outfit is returned and checked. Once verified in good condition, 100% of the deposit is refunded within 48 hours.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>3. Do I need to wash or dry-clean the outfit before returning?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Never! Please do not wash or iron heavy bridal or silk outfits at home. Simply place the outfit and all accessories (dupatta, koti, belt) back into the ShajShare garment bag. Our partner dry-cleaners handle specialized care.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>4. What if the outfit doesn’t fit when it arrives?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Every listing includes exact chest, waist, blouse margin, and lehenga/sherwani length notes. If an outfit arrives and doesn't fit as described, notify us within 4 hours of delivery for an immediate backup swap or full rental refund.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>5. Can I do temporary alterations (like tucking a hem or tightening a blouse)?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Temporary hand-basting stitches that do not cut or puncture fabric are permitted if noted in the listing, and must be undone before return. Cutting fabric or permanent alterations are strictly prohibited.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>6. What happens if there is accidental minor damage or a food stain?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Normal wear, floor-hem dust, and minor removable food/makeup marks are covered by your 5% service fee. Only severe burns, tears, or lost dupattas incur repair deductions from the security deposit based on transparent tailor receipts.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>7. Which cities in Bangladesh do you currently deliver to?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Same-day rider delivery &amp; pickup is available across Dhaka, Chattogram, Sylhet, and Rajshahi. Express courier delivery to Khulna, Cumilla, and Bogura is available with a 1-day advance buffer.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" aria-expanded="false">
+                <span>8. How do lenders get paid when someone rents their outfit?</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                Lenders keep 85% of the rental fee (15% platform commission covers logistics, quality inspection, and marketing). Payouts are sent straight to the lender’s bKash, Nagad, or bank account 24 hours after successful delivery to the renter.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. LIST YOUR OUTFIT (SUPPLY ACQUISITION)
+         ====================================================================== -->
+    <section id="list-outfit" class="section section-blush">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Turn Your Wardrobe Into Income</span>
+          <h2>List Your Wedding Outfit on ShajShare</h2>
+          <div class="gold-divider"></div>
+          <p>Why let a ৳60,000 lehenga or sherwani sit idle? Rent it safely to verified wedding guests and recover your cost in 3–4 bookings.</p>
+        </div>
+
+        <div class="lender-split">
+          <!-- Interactive Earnings Estimator -->
+          <div class="calculator-card">
+            <h3>💰 Lender Earnings Estimator</h3>
+            <p style="font-size:0.9rem; color:var(--color-muted); margin:0.35rem 0 1.25rem;">
+              Slide to estimate how much you can earn per wedding season after our 15% platform &amp; cleaning coordination fee.
+            </p>
+
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label class="form-label" for="calcPriceInput">Original Purchase Price (BDT)</label>
+                <strong style="color:var(--color-maroon);" id="calcPriceDisplay">৳50,000</strong>
+              </div>
+              <input type="range" id="calcPriceInput" class="range-slider" min="10000" max="150000" step="5000" value="50000" />
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--color-muted);">
+                <span>৳10,000</span>
+                <span>৳80,000</span>
+                <span>৳1,50,000</span>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:1rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label class="form-label" for="calcRentalsInput">Rentals per Wedding Season</label>
+                <strong style="color:var(--color-maroon);" id="calcRentalsDisplay">4 rentals</strong>
+              </div>
+              <input type="range" id="calcRentalsInput" class="range-slider" min="1" max="10" step="1" value="4" />
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--color-muted);">
+                <span>1 rental</span>
+                <span>5 rentals</span>
+                <span>10 rentals</span>
+              </div>
+            </div>
+
+            <div class="earnings-output">
+              <div style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.9;">
+                Estimated Net Seasonal Earnings (85% Take-Home)
+              </div>
+              <div class="earnings-figure" id="calcNetEarnings">৳17,000</div>
+              <div style="font-size:0.86rem; display:flex; justify-content:space-between; border-top:1px solid rgba(255,248,238,0.25); padding-top:0.65rem; margin-top:0.5rem;">
+                <span>Suggested 3-Day Rent: <strong id="calcSuggestedRent">৳5,000</strong></span>
+                <span>Cost Recovered: <strong id="calcPaybackPct">34%</strong></span>
+              </div>
+            </div>
+
+            <div style="margin-top:1.15rem; font-size:0.84rem; color:var(--color-muted);">
+              ✓ Free garment pickup &amp; drop-off &nbsp;•&nbsp; ✓ Up to ৳25,000 deposit protection
+            </div>
+          </div>
+
+          <!-- Demo Listing Form -->
+          <div class="form-card">
+            <div class="demo-banner" role="status">
+              <span aria-hidden="true">ℹ️</span>
+              <span><strong>Demo only:</strong> no real payments or personal data are stored. Submitting adds a preview card to the catalog.</span>
+            </div>
+
+            <h3 style="margin-bottom:1rem;">Create a Demo Outfit Listing</h3>
+
+            <form id="listOutfitForm">
+              <div class="form-group" style="margin-bottom:0.9rem;">
+                <label class="form-label" for="listTitle">Outfit Title *</label>
+                <input type="text" id="listTitle" class="form-control" placeholder="e.g., Ruby Velvet Bridal Lehenga with Double Dupatta" required />
+              </div>
+
+              <div class="form-row-2" style="margin-bottom:0.9rem;">
+                <div class="form-group">
+                  <label class="form-label" for="listType">Category *</label>
+                  <select id="listType" class="form-control" required>
+                    <option value="bridal">Bridal</option>
+                    <option value="groom">Groom</option>
+                    <option value="guest">Wedding Guest</option>
+                    <option value="holud/mehendi">Holud / Mehendi</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="listSize">Size *</label>
+                  <select id="listSize" class="form-control" required>
+                    <option value="XS">XS</option>
+                    <option value="S">S</option>
+                    <option value="M" selected>M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="Free Size">Free Size (Saree)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-2" style="margin-bottom:0.9rem;">
+                <div class="form-group">
+                  <label class="form-label" for="listPrice">3-Day Rental Price (৳ BDT) *</label>
+                  <input type="number" id="listPrice" class="form-control" min="800" max="25000" step="100" value="4500" required />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="listCity">City *</label>
+                  <select id="listCity" class="form-control" required>
+                    <option value="Dhaka">Dhaka</option>
+                    <option value="Chattogram">Chattogram</option>
+                    <option value="Sylhet">Sylhet</option>
+                    <option value="Rajshahi">Rajshahi</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:1.15rem;">
+                <label class="form-label" for="listPhotoInput">Outfit Photos (Demo Placeholder)</label>
+                <label class="photo-dropzone" for="listPhotoInput">
+                  <div style="font-size:1.35rem;">📸</div>
+                  <div style="font-weight:500; color:var(--color-maroon); font-size:0.9rem;" id="photoDropzoneLabel">
+                    Click to attach sample photos (front, embroidery close-up, dupatta)
+                  </div>
+                  <div style="font-size:0.78rem; color:var(--color-muted);">Demo mode uses curated wedding studio placeholders</div>
+                  <input type="file" id="listPhotoInput" accept="image/*" style="display:none;" />
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block utm-list-btn">
+                List Your Outfit (Demo Preview)
+              </button>
+            </form>
+
+            <div id="listingSuccessBox" style="display:none; margin-top:1rem; padding:1rem; background:var(--color-sage-soft); border:1px solid var(--color-sage); border-radius:var(--radius); color:#1E3A2A;">
+              <strong>✓ Demo Listing Published!</strong> Your outfit has been added to the top of the Browse Outfits catalog above.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. ACCOUNT / POST-PURCHASE DASHBOARD
+         ====================================================================== -->
+    <section id="account" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Renter Hub &amp; Care</span>
+          <h2>My Rental &amp; Post-Purchase Care</h2>
+          <div class="gold-divider"></div>
+          <p>Track your active rental return checklist, rate your lender, or reach our wedding concierge anytime.</p>
+        </div>
+
+        <div class="account-grid">
+          <!-- Return Checklist Card -->
+          <div class="account-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <h3 style="margin:0;">📦 Return Checklist</h3>
+              <span class="badge-type" id="activeBookingBadge">ID: SHAJ-2026-4109</span>
+            </div>
+            <p style="font-size:0.86rem; color:var(--color-muted); margin-bottom:0.75rem;">
+              Complete these 4 steps before rider pickup to guarantee a fast 100% deposit refund:
+            </p>
+
+            <label class="checklist-item">
+              <input type="checkbox" class="return-check" checked />
+              <span>All pieces included (lehenga/sherwani, blouse/kurta, dupatta/stole)</span>
+            </label>
+            <label class="checklist-item">
+              <input type="checkbox" class="return-check" />
+              <span>Zipped inside the breathable ShajShare garment bag</span>
+            </label>
+            <label class="checklist-item">
+              <input type="checkbox" class="return-check" />
+              <span>No home washing or ironing attempted (we dry-clean!)</span>
+            </label>
+            <label class="checklist-item">
+              <input type="checkbox" class="return-check" />
+              <span>Pickup window confirmed (Day 4 between 2:00 PM – 6:00 PM)</span>
+            </label>
+
+            <div style="margin-top:auto; padding-top:1rem; font-size:0.85rem; color:var(--color-sage); font-weight:600;" id="checklistStatusText">
+              1 of 4 steps completed • Deposit protection active
+            </div>
+          </div>
+
+          <!-- Star Rating & Review Form -->
+          <div class="account-card">
+            <h3>⭐ Rate Your Rental Experience</h3>
+            <p style="font-size:0.86rem; color:var(--color-muted); margin:0.35rem 0 0.75rem;">
+              Help fellow wedding guests by sharing fit and quality feedback.
+            </p>
+
+            <form id="postReviewForm">
+              <div class="form-group">
+                <span class="form-label">Select Star Rating</span>
+                <div class="star-selector" id="starSelector" role="radiogroup" aria-label="Rating from 1 to 5 stars">
+                  <button type="button" class="star-btn active" data-star="1" aria-label="1 star">★</button>
+                  <button type="button" class="star-btn active" data-star="2" aria-label="2 stars">★</button>
+                  <button type="button" class="star-btn active" data-star="3" aria-label="3 stars">★</button>
+                  <button type="button" class="star-btn active" data-star="4" aria-label="4 stars">★</button>
+                  <button type="button" class="star-btn active" data-star="5" aria-label="5 stars">★</button>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0.85rem;">
+                <label class="form-label" for="reviewText">Your Feedback</label>
+                <textarea id="reviewText" class="form-control" rows="3" placeholder="How was the embroidery, fit, and cleanliness?" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-outline btn-block btn-sm">Submit Demo Review</button>
+            </form>
+
+            <div id="submittedReviewDisplay" style="display:none; margin-top:0.85rem; padding:0.75rem; background:var(--color-ivory); border-radius:8px; border:1px solid var(--color-gold); font-size:0.85rem;"></div>
+          </div>
+
+          <!-- Concierge Support & Rent Again -->
+          <div class="account-card" style="background:linear-gradient(180deg, var(--color-white), var(--color-blush-soft));">
+            <h3>🤝 Concierge &amp; Next Event</h3>
+            <p style="font-size:0.88rem; color:var(--color-muted); margin:0.4rem 0 1rem;">
+              Need urgent sizing assistance, date extension, or deposit status? Our Dhaka support desk is open 10 AM – 10 PM daily.
+            </p>
+
+            <div style="background:var(--color-white); padding:0.95rem; border-radius:10px; border:1px solid rgba(201,162,75,0.4); margin-bottom:1.15rem; font-size:0.88rem;">
+              <div style="margin-bottom:0.4rem;">📞 <strong>Hotline (Demo):</strong> +880 1700-000000</div>
+              <div style="margin-bottom:0.4rem;">💬 <strong>WhatsApp Care:</strong> @ShajShareBD</div>
+              <div>✉️ <strong>Email:</strong> care@shajshare-demo.bd</div>
+            </div>
+
+            <div style="margin-top:auto;">
+              <p style="font-size:0.85rem; font-weight:600; color:var(--color-maroon); margin-bottom:0.5rem;">
+                Have another dawat or walima coming up?
+              </p>
+              <a href="#browse" class="btn btn-primary btn-block">Rent Again (10% Repeat Code: SHAJ10)</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       3. OUTFIT DETAIL MODAL (DECISION)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:0.65rem;">
+          <span class="badge-verified">✓ Verified Lender</span>
+          <h3 id="detailModalTitle" style="margin:0; font-size:1.35rem;">Outfit Details</h3>
+        </div>
+        <button type="button" class="modal-close" id="closeDetailModal" aria-label="Close Outfit Details">✕</button>
+      </div>
+
+      <div class="modal-body" id="detailModalContent">
+        <!-- Injected dynamically when user clicks "View Details" -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       4. BOOKING / CHECKOUT MODAL (PURCHASE - DEMO)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h3 id="checkoutModalTitle" style="margin:0; font-size:1.35rem;">Reserve Your Outfit</h3>
+        <button type="button" class="modal-close" id="closeCheckoutModal" aria-label="Close Booking Modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="demo-banner" role="alert">
+          <span aria-hidden="true">⚠️</span>
+          <span><strong>Demo only: no real payments</strong> or financial transactions will be processed.</span>
+        </div>
+
+        <!-- Step Form View -->
+        <div id="checkoutFormView">
+          <div id="checkoutOutfitHeader" style="display:flex; gap:0.9rem; align-items:center; padding-bottom:1rem; border-bottom:1px solid var(--color-border); margin-bottom:1rem;">
+            <!-- Populated dynamically -->
+          </div>
+
+          <form id="demoCheckoutForm">
+            <div class="form-row-2" style="margin-bottom:0.9rem;">
+              <div class="form-group">
+                <label class="form-label" for="checkoutStartDate">Rental Start Date *</label>
+                <input type="date" id="checkoutStartDate" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="checkoutReturnDate">Return Date (3-Day Window)</label>
+                <input type="text" id="checkoutReturnDate" class="form-control" readonly style="background:var(--color-ivory);" />
+              </div>
+            </div>
+
+            <div class="form-row-2" style="margin-bottom:0.9rem;">
+              <div class="form-group">
+                <label class="form-label" for="checkoutName">Full Name (Demo) *</label>
+                <input type="text" id="checkoutName" class="form-control" placeholder="e.g., Ayesha Siddiqua" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="checkoutPhone">Mobile Number (+880) *</label>
+                <input type="tel" id="checkoutPhone" class="form-control" placeholder="017XX-XXXXXX" required />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label class="form-label" for="checkoutAddress">Delivery Area / City *</label>
+              <input type="text" id="checkoutAddress" class="form-control" placeholder="e.g., House 12, Road 7, Banani, Dhaka" required />
+            </div>
+
+            <!-- Transparent Price Breakdown -->
+            <div class="price-breakdown-box" id="checkoutPriceBreakdown">
+              <!-- Populated dynamically -->
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Select Demo Payment Method</span>
+              <div class="payment-methods" role="radiogroup" aria-label="Mock payment method">
+                <button type="button" class="pay-option selected" data-method="bKash">
+                  <span style="color:#D12053; font-weight:700;">bKash</span>
+                  <span style="font-size:0.72rem; color:var(--color-muted);">Demo Wallet</span>
+                </button>
+                <button type="button" class="pay-option" data-method="Nagad">
+                  <span style="color:#E85D04; font-weight:700;">Nagad</span>
+                  <span style="font-size:0.72rem; color:var(--color-muted);">Demo Wallet</span>
+                </button>
+                <button type="button" class="pay-option" data-method="Visa / Mastercard">
+                  <span style="color:#1A4B84; font-weight:700;">Card</span>
+                  <span style="font-size:0.72rem; color:var(--color-muted);">Visa / MC</span>
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              Confirm Demo Booking
+            </button>
+          </form>
+        </div>
+
+        <!-- Confirmation Screen View -->
+        <div id="checkoutConfirmationView" style="display:none; text-align:center; padding:1rem 0.5rem;">
+          <div style="width:64px; height:64px; border-radius:50%; background:var(--color-sage); color:var(--color-white); font-size:2rem; display:grid; place-items:center; margin:0 auto 1rem;">
+            ✓
+          </div>
+          <span class="eyebrow">Booking Confirmed (Demo)</span>
+          <h2 style="margin-bottom:0.4rem;">Your Wedding Look is Reserved!</h2>
+          <p style="color:var(--color-muted); font-size:0.95rem; margin-bottom:1.25rem;">
+            We’ve simulated your reservation and notified the verified lender.
+          </p>
+
+          <div style="background:var(--color-ivory); border:1.5px solid var(--color-gold); border-radius:var(--radius); padding:1.15rem; text-align:left; margin-bottom:1.25rem;" id="confirmationSummaryBox">
+            <!-- Populated dynamically with fake Booking ID -->
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center;">
+            <a href="#account" class="btn btn-primary" id="goToAccountBtn">View Return Checklist</a>
+            <button type="button" class="btn btn-outline" id="closeConfirmationBtn">Continue Browsing</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       8. FOOTER
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" class="brand-logo" style="color:var(--color-ivory); margin-bottom:0.75rem;">
+            <span class="brand-crest">✦</span>
+            <span>Shaj<span style="color:var(--color-gold);">Share</span></span>
+          </a>
+          <p style="font-size:0.9rem; max-width:320px;">
+            Bangladesh’s peer-to-peer wedding attire marketplace. Wear extraordinary bridal, groom, and festive outfits sustainably while empowering local wardrobe owners.
+          </p>
+          <div class="social-row" aria-label="Social Media Links">
+            <a href="#home" class="social-btn" aria-label="Facebook">f</a>
+            <a href="#home" class="social-btn" aria-label="Instagram">ig</a>
+            <a href="#home" class="social-btn" aria-label="TikTok">tt</a>
+            <a href="#home" class="social-btn" aria-label="YouTube">yt</a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#browse">Bridal Lehengas &amp; Sarees</a></li>
+            <li><a href="#browse">Groom Sherwanis &amp; Panjabis</a></li>
+            <li><a href="#browse">Holud &amp; Mehendi Looks</a></li>
+            <li><a href="#list-outfit" class="utm-list-link">List Your Outfit</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Trust &amp; Policies</h4>
+          <ul>
+            <li><a href="#how-it-works">How ShajShare Works</a></li>
+            <li><a href="#how-it-works">100% Refundable Deposit Policy</a></li>
+            <li><a href="#how-it-works">Hygiene &amp; Dry-Cleaning Promise</a></li>
+            <li><a href="#faq">Frequently Asked Questions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Support &amp; Hubs</h4>
+          <ul>
+            <li>📍 Gulshan-2 &amp; Dhanmondi, Dhaka</li>
+            <li>📍 Khulshi, Chattogram • Sylhet</li>
+            <li>📞 +880 1700-000000 (10am–10pm)</li>
+            <li>✉️ care@shajshare-demo.bd</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 ShajShare Bangladesh. All rights reserved.
+        </div>
+        <div>
+          <strong>Demo Disclaimer:</strong> Prototype marketplace for demonstration only. No real payments, personal data, or commercial orders are processed.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky Mobile Bottom CTA Bar -->
+  <div class="mobile-sticky-bar" aria-label="Quick Mobile Actions">
+    <a href="#browse" class="btn btn-primary btn-sm">Browse Outfits</a>
+    <a href="#list-outfit" class="btn btn-outline btn-sm utm-list-link">List Your Outfit</a>
+  </div>
+
+  <!-- Toast Feedback -->
+  <div class="toast" id="toastNotice" role="status" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       VANILLA JAVASCRIPT APPLICATION LOGIC
+       ======================================================================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ----------------------------------------------------------------------
+         1. UTM PARAMETER CONFIGURATION FOR "LIST YOUR OUTFIT" CTAs
+         ---------------------------------------------------------------------- */
+      const UTM_LIST_URL = "/?utm_source=facebook&utm_medium=group_post&utm_campaign=winter_wedding_launch&utm_content=list_outfit_cta#list-outfit";
+
+      function applyUtmLinks() {
+        document.querySelectorAll(".utm-list-link").forEach((link) => {
+          link.setAttribute("href", UTM_LIST_URL);
+          link.addEventListener("click", (e) => {
+            // Update browser URL cleanly without reloading the single-page demo
+            e.preventDefault();
+            if (window.history && window.history.pushState) {
+              window.history.pushState(null, "", UTM_LIST_URL);
+            }
+            const target = document.getElementById("list-outfit");
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+            }
+          });
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         2. SAMPLE DATASET (14 BANGLADESHI WEDDING OUTFITS)
+         ---------------------------------------------------------------------- */
+      const outfitsData = [
+        {
+          id: "shaj-101",
+          name: "Imperial Maroon Zardozi Bridal Lehenga",
+          type: "bridal",
+          size: "M",
+          colour: "Maroon",
+          city: "Dhaka",
+          price: 6500,
+          retailPrice: 85000,
+          deposit: 8000,
+          rating: 4.9,
+          reviewsCount: 24,
+          featured: true,
+          lender: "Tahmina Chowdhury (Gulshan-1)",
+          measurements: "Chest 36\" (2\" margin inside), Waist 30\", Lehenga Length 42\". Includes raw silk blouse & double organza dupatta.",
+          images: [
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Sadia Islam", rating: 5, comment: "Looked regal for my reception! The double dupatta drapes effortlessly." },
+            { user: "Maliha Haque", rating: 5, comment: "Spotlessly clean and exact fit as described." }
+          ]
+        },
+        {
+          id: "shaj-102",
+          name: "Royal Ivory & Antique Gold Groom Sherwani",
+          type: "groom",
+          size: "L",
+          colour: "Ivory",
+          city: "Dhaka",
+          price: 3800,
+          retailPrice: 42000,
+          deposit: 5000,
+          rating: 4.8,
+          reviewsCount: 19,
+          featured: true,
+          lender: "Rafiqul Hasan (Banani)",
+          measurements: "Chest 42\", Shoulder 18.5\", Sherwani Length 44\". Comes with churidar pajama, embroidered shawl & matching pagri.",
+          images: [
+            "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Nayeem Karim", rating: 5, comment: "Great tailored silhouette, got endless compliments at my biye." }
+          ]
+        },
+        {
+          id: "shaj-103",
+          name: "Mustard Katan & Gota Patti Holud Lehenga",
+          type: "holud/mehendi",
+          size: "S",
+          colour: "Gold",
+          city: "Chattogram",
+          price: 2600,
+          retailPrice: 24000,
+          deposit: 3000,
+          rating: 4.9,
+          reviewsCount: 31,
+          featured: true,
+          lender: "Mehjabin Akter (Khulshi)",
+          measurements: "Chest 34\", Waist 28\", Length 40\". Lightweight breathable Banarasi katan ideal for outdoor Gaye Holud.",
+          images: [
+            "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Raisa Kabir", rating: 5, comment: "Vibrant marigold hue—photographed beautifully in daylight!" }
+          ]
+        },
+        {
+          id: "shaj-104",
+          name: "Heirloom Dhakai Muslin Jamdani Saree",
+          type: "guest",
+          size: "Free Size",
+          colour: "Ivory",
+          city: "Dhaka",
+          price: 2400,
+          retailPrice: 28000,
+          deposit: 3500,
+          rating: 5.0,
+          reviewsCount: 16,
+          featured: true,
+          lender: "Anika Tabassum (Dhanmondi)",
+          measurements: "12-haat handloom Jamdani with gold zari motifs. Includes unstitched/adjustable M-size silk blouse.",
+          images: [
+            "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Sabrina Zaman", rating: 5, comment: "Authentic Rupganj Jamdani weave. Felt so graceful at a daytime wedding." }
+          ]
+        },
+        {
+          id: "shaj-105",
+          name: "Emerald Velvet Mughal Groom Sherwani",
+          type: "groom",
+          size: "XL",
+          colour: "Emerald",
+          city: "Sylhet",
+          price: 4200,
+          retailPrice: 48000,
+          deposit: 5500,
+          rating: 4.8,
+          reviewsCount: 14,
+          featured: true,
+          lender: "Shahriar Ahmed (Zindabazar)",
+          measurements: "Chest 44\", Shoulder 19\", Length 45\". Rich winter velvet with antique gold dabka collar work.",
+          images: [
+            "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Tariq Mahmud", rating: 5, comment: "Warm, luxurious, and arrived right on time in Sylhet." }
+          ]
+        },
+        {
+          id: "shaj-106",
+          name: "Blush Rose Resham & Sequin Walima Gown",
+          type: "bridal",
+          size: "M",
+          colour: "Pastel Pink",
+          city: "Dhaka",
+          price: 5800,
+          retailPrice: 72000,
+          deposit: 7000,
+          rating: 4.9,
+          reviewsCount: 22,
+          featured: true,
+          lender: "Zarin Tasnim (Uttara)",
+          measurements: "Chest 36\", Waist 29\", Floor Length 56\" with trail. Soft net with hand-sewn pearl & silver resham embroidery.",
+          images: [
+            "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Nadia Sultana", rating: 5, comment: "Dreamy pastel tone for Walima! Everyone thought it was custom-made for me." }
+          ]
+        },
+        {
+          id: "shaj-107",
+          name: "Mehendi Emerald Mirror-Work Sharara Set",
+          type: "holud/mehendi",
+          size: "M",
+          colour: "Emerald",
+          city: "Dhaka",
+          price: 2200,
+          retailPrice: 18500,
+          deposit: 2500,
+          rating: 4.7,
+          reviewsCount: 18,
+          featured: false,
+          lender: "Fariha Nawar (Mirpur DOHS)",
+          measurements: "Kurti Chest 36\", Sharara Waist elastic 28\"-33\", Length 41\". Easy to dance in during Mehendi night.",
+          images: [
+            "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Tania Rahman", rating: 5, comment: "Super comfortable for dancing and zero heavy weight." }
+          ]
+        },
+        {
+          id: "shaj-108",
+          name: "Crimson Banarasi Katan Bridal Saree",
+          type: "bridal",
+          size: "Free Size",
+          colour: "Maroon",
+          city: "Rajshahi",
+          price: 3400,
+          retailPrice: 36000,
+          deposit: 4500,
+          rating: 4.9,
+          reviewsCount: 27,
+          featured: false,
+          lender: "Dr. Samia Rahman (Shaheb Bazar)",
+          measurements: "Pure silk Banarasi katan with broad gold meenakari border. Includes matching Magura-cut blouse (size 34-38 adjustable).",
+          images: [
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Mehnaz Jahan", rating: 5, comment: "Classic Bengali bridal look without spending thirty thousand taka." }
+          ]
+        },
+        {
+          id: "shaj-109",
+          name: "Royal Navy Silk Panjabi & Embroidered Koti",
+          type: "guest",
+          size: "L",
+          colour: "Navy",
+          city: "Chattogram",
+          price: 1650,
+          retailPrice: 14000,
+          deposit: 2000,
+          rating: 4.6,
+          reviewsCount: 12,
+          featured: false,
+          lender: "Imran Hossain (GEC Circle)",
+          measurements: "Chest 42\", Panjabi Length 42\". Includes raw silk navy panjabi, gold-threaded koti jacket, and white trouser.",
+          images: [
+            "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Sajid Anwar", rating: 5, comment: "Crisp tailoring, great for groom’s brothers and friends." }
+          ]
+        },
+        {
+          id: "shaj-110",
+          name: "Antique Gold Tissue Anarkali & Dupatta",
+          type: "guest",
+          size: "S",
+          colour: "Gold",
+          city: "Sylhet",
+          price: 2500,
+          retailPrice: 22000,
+          deposit: 3000,
+          rating: 4.8,
+          reviewsCount: 15,
+          featured: false,
+          lender: "Nabila Chowdhury (Amberkhana)",
+          measurements: "Chest 34\", Waist 28\", Length 52\". Shimmering tissue silk with maroon velvet border.",
+          images: [
+            "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Rubaiya Islam", rating: 5, comment: "Very flattering flare and super clean." }
+          ]
+        },
+        {
+          id: "shaj-111",
+          name: "Pastel Pink Organza Saree with Pearl Border",
+          type: "guest",
+          size: "Free Size",
+          colour: "Pastel Pink",
+          city: "Dhaka",
+          price: 1950,
+          retailPrice: 16500,
+          deposit: 2200,
+          rating: 4.7,
+          reviewsCount: 20,
+          featured: false,
+          lender: "Sadia Afrin (Bashundhara R/A)",
+          measurements: "Lightweight Korean organza with scalloped hand-beaded pearl border. Includes padded designer blouse (size M).",
+          images: [
+            "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Tasnim Ferdous", rating: 5, comment: "So chic for a daytime bridal shower or engagement." }
+          ]
+        },
+        {
+          id: "shaj-112",
+          name: "Maroon & Gold Jodhpuri Bandhgala Suit",
+          type: "groom",
+          size: "M",
+          colour: "Maroon",
+          city: "Dhaka",
+          price: 3500,
+          retailPrice: 38000,
+          deposit: 4500,
+          rating: 4.9,
+          reviewsCount: 11,
+          featured: false,
+          lender: "Adnan Karim (Lalmatia)",
+          measurements: "Chest 40\", Shoulder 17.5\", Jacket Length 31\". Includes tailored trousers and silk pocket square.",
+          images: [
+            "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Faisal Mahmud", rating: 5, comment: "Sharp reception look, fit like a glove." }
+          ]
+        },
+        {
+          id: "shaj-113",
+          name: "Turmeric Yellow & Maroon Rajshahi Silk Saree",
+          type: "holud/mehendi",
+          size: "Free Size",
+          colour: "Gold",
+          city: "Rajshahi",
+          price: 1500,
+          retailPrice: 13500,
+          deposit: 1800,
+          rating: 4.8,
+          reviewsCount: 17,
+          featured: false,
+          lender: "Moushumi Akter (Uposhohor)",
+          measurements: "Authentic Rajshahi Balaka silk with traditional red-maroon temple border. Includes stitched blouse (size L).",
+          images: [
+            "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Anannya Sen", rating: 5, comment: "Traditional Holud perfection!" }
+          ]
+        },
+        {
+          id: "shaj-114",
+          name: "Royal Navy Velvet Bridal Reception Lehenga",
+          type: "bridal",
+          size: "XS",
+          colour: "Navy",
+          city: "Chattogram",
+          price: 6200,
+          retailPrice: 78000,
+          deposit: 7500,
+          rating: 5.0,
+          reviewsCount: 9,
+          featured: false,
+          lender: "Nusrat Jahan (Panchlaish)",
+          measurements: "Chest 32\", Waist 26\", Length 40\". Midnight navy micro-velvet with silver-gold kardana embroidery.",
+          images: [
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80"
+          ],
+          reviews: [
+            { user: "Humaira Binte", rating: 5, comment: "Rare to find true petite XS bridal wear—thank you ShajShare!" }
+          ]
+        }
+      ];
+
+      /* ----------------------------------------------------------------------
+         3. STATE & HELPER FUNCTIONS
+         ---------------------------------------------------------------------- */
+      let selectedOutfit = null;
+      let selectedPaymentMethod = "bKash";
+      let selectedStarRating = 5;
+
+      function formatBDT(amount) {
+        return "৳" + Number(amount).toLocaleString("en-US");
+      }
+
+      function showToast(message) {
+        const toast = document.getElementById("toastNotice");
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3600);
+      }
+
+      function addDaysToDate(dateStr, days) {
+        const date = new Date(dateStr + "T00:00:00");
+        if (isNaN(date.getTime())) return "";
+        date.setDate(date.getDate() + days);
+        return date.toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric"
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         4. RENDER OUTFIT CARDS (FEATURED + BROWSE CATALOG)
+         ---------------------------------------------------------------------- */
+      function createOutfitCardHTML(outfit) {
+        const savingsPct = Math.round((1 - outfit.price / outfit.retailPrice) * 100);
+        return `
+          <article class="outfit-card">
+            <div class="card-media">
+              <img
+                src="${outfit.images[0]}"
+                alt="${outfit.name} — ${outfit.type} outfit in ${outfit.city}"
+                loading="lazy"
+                onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22><rect width=%22400%22 height=%22300%22 fill=%22%237B1E3A%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%23FFF8EE%22 font-family=%22Georgia%22 font-size=%2220%22 text-anchor=%22middle%22>ShajShare Couture</text></svg>'"
+              />
+              <div class="card-badges-top">
+                <span class="badge-verified">✓ Verified</span>
+                <span class="badge-type">${outfit.type}</span>
+              </div>
+              <span class="card-city-pill">📍 ${outfit.city}</span>
+            </div>
+
+            <div class="card-body">
+              <div class="card-meta-row">
+                <span>Size: <strong>${outfit.size}</strong> • ${outfit.colour}</span>
+                <span class="card-rating">★ ${outfit.rating.toFixed(1)} (${outfit.reviewsCount})</span>
+              </div>
+
+              <h3 class="card-title">${outfit.name}</h3>
+
+              <div class="card-tags">
+                <span class="tag-chip">Save ${savingsPct}% vs Buy</span>
+                <span class="tag-chip">Cleaned &amp; Sealed</span>
+              </div>
+
+              <div class="card-pricing">
+                <div class="price-main">
+                  ${formatBDT(outfit.price)} <small>/ 3 days</small>
+                </div>
+                <div class="price-deposit">
+                  + ${formatBDT(outfit.deposit)}<br/>refundable deposit
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-outline btn-block btn-sm view-detail-btn" data-id="${outfit.id}">
+                View Details
+              </button>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderFeaturedOutfits() {
+        const container = document.getElementById("featuredGrid");
+        const featured = outfitsData.filter((item) => item.featured).slice(0, 6);
+        container.innerHTML = featured.map(createOutfitCardHTML).join("");
+      }
+
+      function renderCatalogOutfits() {
+        const typeVal = document.getElementById("filterType").value;
+        const sizeVal = document.getElementById("filterSize").value;
+        const colourVal = document.getElementById("filterColour").value;
+        const maxPriceVal = Number(document.getElementById("filterPrice").value);
+        const cityVal = document.getElementById("filterCity").value;
+        const sortVal = document.getElementById("sortBy").value;
+
+        let filtered = outfitsData.filter((item) => {
+          if (typeVal !== "all" && item.type !== typeVal) return false;
+          if (sizeVal !== "all" && item.size !== sizeVal) return false;
+          if (colourVal !== "all" && item.colour !== colourVal) return false;
+          if (item.price > maxPriceVal) return false;
+          if (cityVal !== "all" && item.city !== cityVal) return false;
+          return true;
+        });
+
+        // Sorting
+        if (sortVal === "price-asc") {
+          filtered.sort((a, b) => a.price - b.price);
+        } else if (sortVal === "price-desc") {
+          filtered.sort((a, b) => b.price - a.price);
+        } else if (sortVal === "rating-desc") {
+          filtered.sort((a, b) => b.rating - a.rating);
+        }
+
+        const grid = document.getElementById("catalogGrid");
+        const emptyState = document.getElementById("emptyCatalogState");
+        const countEl = document.getElementById("resultsCount");
+
+        countEl.textContent = `Showing ${filtered.length} verified outfit${filtered.length === 1 ? "" : "s"}`;
+
+        if (filtered.length === 0) {
+          grid.innerHTML = "";
+          emptyState.style.display = "block";
+        } else {
+          emptyState.style.display = "none";
+          grid.innerHTML = filtered.map(createOutfitCardHTML).join("");
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         5. OUTFIT DETAIL MODAL (DECISION)
+         ---------------------------------------------------------------------- */
+      function openDetailModal(outfitId) {
+        const outfit = outfitsData.find((item) => item.id === outfitId);
+        if (!outfit) return;
+        selectedOutfit = outfit;
+
+        const filterDateVal = document.getElementById("filterDate").value;
+        const defaultDate = filterDateVal || new Date(Date.now() + 7 * 86400000).toISOString().split("T")[0];
+        const serviceFee = Math.round(outfit.price * 0.05);
+
+        const thumbsHTML = outfit.images
+          .map(
+            (img, idx) => `
+            <button type="button" class="thumb-btn ${idx === 0 ? "active" : ""}" data-src="${img}" aria-label="View outfit angle ${idx + 1}">
+              <img src="${img}" alt="${outfit.name} thumbnail ${idx + 1}" />
+            </button>
+          `
+          )
+          .join("");
+
+        const reviewsHTML = outfit.reviews
+          .map(
+            (rev) => `
+            <div style="padding:0.65rem 0; border-bottom:1px solid rgba(123,30,58,0.1); font-size:0.88rem;">
+              <div style="display:flex; justify-content:space-between;">
+                <strong>${rev.user}</strong>
+                <span style="color:#8A6214;">${"★".repeat(rev.rating)}</span>
+              </div>
+              <p style="color:var(--color-muted); margin-top:0.2rem;">${rev.comment}</p>
+            </div>
+          `
+          )
+          .join("");
+
+        const modalBody = document.getElementById("detailModalContent");
+        modalBody.innerHTML = `
+          <div class="detail-grid">
+            <div>
+              <div class="gallery-main">
+                <img id="detailMainImg" src="${outfit.images[0]}" alt="${outfit.name}" />
+              </div>
+              <div class="gallery-thumbs">
+                ${thumbsHTML}
+              </div>
+
+              <div style="margin-top:1.1rem; padding:0.9rem; background:var(--color-blush-soft); border-radius:var(--radius); border:1px solid rgba(123,30,58,0.12); font-size:0.86rem;">
+                <div style="font-weight:600; color:var(--color-maroon); margin-bottom:0.25rem;">🛡️ Lender &amp; Hygiene Verification</div>
+                <div>Owner: <strong>${outfit.lender}</strong></div>
+                <div style="color:var(--color-sage); font-weight:500; margin-top:0.2rem;">✓ NID Verified • ✓ Dry-cleaned &amp; sealed prior to dispatch</div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; margin-bottom:0.4rem;">
+                <span class="badge-type">${outfit.type}</span>
+                <span style="font-size:0.85rem; color:var(--color-muted);">📍 ${outfit.city} • Size <strong>${outfit.size}</strong> • ${outfit.colour}</span>
+              </div>
+
+              <h2 style="font-size:1.75rem; margin-bottom:0.4rem;">${outfit.name}</h2>
+              <div style="font-size:0.9rem; color:#8A6214; font-weight:600; margin-bottom:0.85rem;">
+                ★ ${outfit.rating.toFixed(1)} (${outfit.reviewsCount} verified renter reviews) • Retail Value ${formatBDT(outfit.retailPrice)}
+              </div>
+
+              <div style="margin-bottom:0.9rem;">
+                <strong style="font-size:0.88rem; color:var(--color-maroon);">Size &amp; Fit Notes:</strong>
+                <p style="font-size:0.9rem; color:var(--color-muted); margin-top:0.2rem;">${outfit.measurements}</p>
+              </div>
+
+              <!-- Price & Deposit Breakdown -->
+              <div class="price-breakdown-box">
+                <div class="breakdown-row">
+                  <span>3-Day Rental Fee</span>
+                  <strong>${formatBDT(outfit.price)}</strong>
+                </div>
+                <div class="breakdown-row">
+                  <span>Cleaning &amp; Minor Damage Cover (5%)</span>
+                  <span>${formatBDT(serviceFee)}</span>
+                </div>
+                <div class="breakdown-row">
+                  <span style="color:var(--color-sage);">100% Refundable Security Deposit</span>
+                  <strong style="color:var(--color-sage);">${formatBDT(outfit.deposit)}</strong>
+                </div>
+                <div class="breakdown-row total">
+                  <span>Total Due at Booking</span>
+                  <span>${formatBDT(outfit.price + serviceFee + outfit.deposit)}</span>
+                </div>
+              </div>
+
+              <!-- Availability Date Picker -->
+              <div class="form-group" style="margin-bottom:1rem;">
+                <label class="form-label" for="detailDateInput">Check Event Availability (3-Day Window)</label>
+                <div style="display:flex; gap:0.6rem;">
+                  <input type="date" id="detailDateInput" class="form-control" value="${defaultDate}" />
+                  <button type="button" class="btn btn-outline btn-sm" id="checkAvailBtn">Check Availability</button>
+                </div>
+                <div id="availFeedback" style="font-size:0.84rem; color:var(--color-sage); font-weight:500; margin-top:0.35rem;">
+                  ✓ Available for ${defaultDate} (Return by ${addDaysToDate(defaultDate, 3)})
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary btn-block" id="proceedToBookBtn">
+                Book Now (Demo Checkout) →
+              </button>
+
+              <p style="font-size:0.78rem; color:var(--color-muted); margin-top:0.65rem;">
+                <strong>Policy Snippet:</strong> Free cancellation up to 72 hours before delivery. Deposit refunded within 48 hours of return inspection.
+              </p>
+
+              <!-- Renter Reviews -->
+              <div style="margin-top:1.15rem;">
+                <h4 style="font-size:1.1rem; margin-bottom:0.3rem;">Recent Renter Reviews</h4>
+                ${reviewsHTML}
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Gallery thumbnail switching
+        modalBody.querySelectorAll(".thumb-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            modalBody.querySelectorAll(".thumb-btn").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("detailMainImg").src = btn.dataset.src;
+          });
+        });
+
+        // Availability checker feedback
+        document.getElementById("checkAvailBtn").addEventListener("click", () => {
+          const picked = document.getElementById("detailDateInput").value;
+          const feedback = document.getElementById("availFeedback");
+          if (!picked) {
+            feedback.style.color = "var(--color-maroon)";
+            feedback.textContent = "Please select a valid event start date.";
+            return;
+          }
+          feedback.style.color = "var(--color-sage)";
+          feedback.textContent = `✓ Available! 3-day window: ${picked} to ${addDaysToDate(picked, 3)}.`;
+        });
+
+        // Book Now -> Opens Checkout Modal
+        document.getElementById("proceedToBookBtn").addEventListener("click", () => {
+          const chosenDate = document.getElementById("detailDateInput").value || defaultDate;
+          closeModal("detailModal");
+          openCheckoutModal(outfit, chosenDate);
+        });
+
+        openModal("detailModal");
+      }
+
+      /* ----------------------------------------------------------------------
+         6. DEMO BOOKING / CHECKOUT MODAL (PURCHASE)
+         ---------------------------------------------------------------------- */
+      function openCheckoutModal(outfit, startDate) {
+        selectedOutfit = outfit;
+        const serviceFee = Math.round(outfit.price * 0.05);
+        const totalPayable = outfit.price + serviceFee + outfit.deposit;
+
+        document.getElementById("checkoutFormView").style.display = "block";
+        document.getElementById("checkoutConfirmationView").style.display = "none";
+
+        document.getElementById("checkoutOutfitHeader").innerHTML = `
+          <img src="${outfit.images[0]}" alt="${outfit.name}" style="width:68px; height:68px; border-radius:10px; object-fit:cover; border:1px solid var(--color-gold);" />
+          <div>
+            <div style="font-family:var(--font-heading); font-size:1.2rem; font-weight:700; color:var(--color-maroon);">${outfit.name}</div>
+            <div style="font-size:0.84rem; color:var(--color-muted);">Size ${outfit.size} • ${outfit.city} • Verified Owner</div>
+          </div>
+        `;
+
+        const startInput = document.getElementById("checkoutStartDate");
+        const returnInput = document.getElementById("checkoutReturnDate");
+        startInput.value = startDate;
+        returnInput.value = addDaysToDate(startDate, 3);
+
+        startInput.onchange = () => {
+          returnInput.value = addDaysToDate(startInput.value, 3);
+        };
+
+        document.getElementById("checkoutPriceBreakdown").innerHTML = `
+          <div class="breakdown-row">
+            <span>3-Day Outfit Rental</span>
+            <span>${formatBDT(outfit.price)}</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Service &amp; Dry-Cleaning Fee (5%)</span>
+            <span>${formatBDT(serviceFee)}</span>
+          </div>
+          <div class="breakdown-row">
+            <span style="color:var(--color-sage);">Refundable Security Deposit</span>
+            <span style="color:var(--color-sage);">${formatBDT(outfit.deposit)}</span>
+          </div>
+          <div class="breakdown-row total">
+            <span>Total Demo Amount</span>
+            <span>${formatBDT(totalPayable)}</span>
+          </div>
+        `;
+
+        openModal("checkoutModal");
+      }
+
+      function setupCheckoutHandlers() {
+        // Payment method selection
+        document.querySelectorAll(".pay-option").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".pay-option").forEach((b) => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            selectedPaymentMethod = btn.dataset.method;
+          });
+        });
+
+        // Submit demo booking
+        document.getElementById("demoCheckoutForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (!selectedOutfit) return;
+
+          const renterName = document.getElementById("checkoutName").value.trim();
+          const startDate = document.getElementById("checkoutStartDate").value;
+          const returnDate = document.getElementById("checkoutReturnDate").value;
+          const address = document.getElementById("checkoutAddress").value.trim();
+          const serviceFee = Math.round(selectedOutfit.price * 0.05);
+          const totalPayable = selectedOutfit.price + serviceFee + selectedOutfit.deposit;
+
+          const fakeBookingId = "SHAJ-2026-" + Math.floor(1000 + Math.random() * 9000);
+
+          document.getElementById("confirmationSummaryBox").innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(123,30,58,0.15); padding-bottom:0.5rem; margin-bottom:0.65rem;">
+              <span style="font-size:0.85rem; color:var(--color-muted);">Demo Booking ID</span>
+              <strong style="font-size:1.05rem; color:var(--color-maroon);">${fakeBookingId}</strong>
+            </div>
+            <div style="font-size:0.9rem; display:grid; gap:0.35rem;">
+              <div><strong>Outfit:</strong> ${selectedOutfit.name} (Size ${selectedOutfit.size})</div>
+              <div><strong>Renter:</strong> ${renterName}</div>
+              <div><strong>Rental Window:</strong> ${startDate} → ${returnDate}</div>
+              <div><strong>Delivery Hub:</strong> ${address}</div>
+              <div><strong>Mock Payment:</strong> ${selectedPaymentMethod} (${formatBDT(totalPayable)} incl. ${formatBDT(selectedOutfit.deposit)} refundable deposit)</div>
+            </div>
+          `;
+
+          // Sync ID to Post-Purchase section
+          const badge = document.getElementById("activeBookingBadge");
+          if (badge) badge.textContent = "ID: " + fakeBookingId;
+
+          document.getElementById("checkoutFormView").style.display = "none";
+          document.getElementById("checkoutConfirmationView").style.display = "block";
+          showToast(`Demo Booking ${fakeBookingId} confirmed!`);
+        });
+
+        document.getElementById("closeConfirmationBtn").addEventListener("click", () => {
+          closeModal("checkoutModal");
+        });
+
+        document.getElementById("goToAccountBtn").addEventListener("click", () => {
+          closeModal("checkoutModal");
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         7. MODAL OPEN/CLOSE & ACCESSIBILITY
+         ---------------------------------------------------------------------- */
+      function openModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      function setupModalControls() {
+        document.getElementById("closeDetailModal").addEventListener("click", () => closeModal("detailModal"));
+        document.getElementById("closeCheckoutModal").addEventListener("click", () => closeModal("checkoutModal"));
+
+        ["detailModal", "checkoutModal"].forEach((id) => {
+          document.getElementById(id).addEventListener("click", (e) => {
+            if (e.target.id === id) closeModal(id);
+          });
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            closeModal("detailModal");
+            closeModal("checkoutModal");
+          }
+        });
+
+        // Delegate "View Details" clicks from both Featured & Catalog grids
+        document.body.addEventListener("click", (e) => {
+          const btn = e.target.closest(".view-detail-btn");
+          if (btn) {
+            openDetailModal(btn.dataset.id);
+          }
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         8. EARNINGS ESTIMATOR & DEMO LISTING FORM
+         ---------------------------------------------------------------------- */
+      function setupLenderTools() {
+        const priceSlider = document.getElementById("calcPriceInput");
+        const rentalsSlider = document.getElementById("calcRentalsInput");
+
+        function updateEarnings() {
+          const originalPrice = Number(priceSlider.value);
+          const rentalsCount = Number(rentalsSlider.value);
+          // Suggested 3-day rent ~10% of retail price
+          const suggestedRent = Math.round((originalPrice * 0.1) / 100) * 100;
+          const grossEarnings = suggestedRent * rentalsCount;
+          const netEarnings = Math.round(grossEarnings * 0.85); // After 15% commission
+          const paybackPct = Math.min(100, Math.round((netEarnings / originalPrice) * 100));
+
+          document.getElementById("calcPriceDisplay").textContent = formatBDT(originalPrice);
+          document.getElementById("calcRentalsDisplay").textContent = `${rentalsCount} rental${rentalsCount === 1 ? "" : "s"}`;
+          document.getElementById("calcSuggestedRent").textContent = formatBDT(suggestedRent);
+          document.getElementById("calcNetEarnings").textContent = formatBDT(netEarnings);
+          document.getElementById("calcPaybackPct").textContent = `${paybackPct}%`;
+        }
+
+        priceSlider.addEventListener("input", updateEarnings);
+        rentalsSlider.addEventListener("input", updateEarnings);
+        updateEarnings();
+
+        // Photo placeholder feedback
+        document.getElementById("listPhotoInput").addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            document.getElementById("photoDropzoneLabel").textContent = `✓ Selected "${file.name}" (Demo studio preview ready)`;
+          }
+        });
+
+        // Demo Listing Form Submission
+        document.getElementById("listOutfitForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const title = document.getElementById("listTitle").value.trim();
+          const type = document.getElementById("listType").value;
+          const size = document.getElementById("listSize").value;
+          const price = Number(document.getElementById("listPrice").value);
+          const city = document.getElementById("listCity").value;
+
+          const newOutfit = {
+            id: "shaj-demo-" + Date.now(),
+            name: title,
+            type: type,
+            size: size,
+            colour: "Maroon",
+            city: city,
+            price: price,
+            retailPrice: price * 10,
+            deposit: Math.round(price * 1.2),
+            rating: 5.0,
+            reviewsCount: 1,
+            featured: false,
+            lender: "You (Demo Community Lender)",
+            measurements: `Size ${size} standard Bangladeshi wedding tailoring with 1.5" inner seam allowance.`,
+            images: [
+              "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80"
+            ],
+            reviews: [
+              { user: "ShajShare Quality Team", rating: 5, comment: "Demo listing verified for hygiene & authenticity." }
+            ]
+          };
+
+          outfitsData.unshift(newOutfit);
+          renderCatalogOutfits();
+
+          document.getElementById("listingSuccessBox").style.display = "block";
+          e.target.reset();
+          document.getElementById("photoDropzoneLabel").textContent = "Click to attach sample photos (front, embroidery close-up, dupatta)";
+          showToast("Demo outfit added to Browse Outfits!");
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         9. FAQ ACCORDION, MOBILE MENU, FILTERS & POST-PURCHASE ACCOUNT
+         ---------------------------------------------------------------------- */
+      function setupInteractiveUI() {
+        // Mobile Hamburger Menu
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburgerBtn.addEventListener("click", () => {
+          const isOpen = mobileMenu.classList.toggle("open");
+          hamburgerBtn.setAttribute("aria-expanded", String(isOpen));
+          hamburgerBtn.textContent = isOpen ? "✕" : "☰";
+        });
+
+        document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.remove("open");
+            hamburgerBtn.setAttribute("aria-expanded", "false");
+            hamburgerBtn.textContent = "☰";
+          });
+        });
+
+        // Mobile Collapsible Filter Panel
+        const toggleFiltersBtn = document.getElementById("toggleFiltersBtn");
+        const filterPanel = document.getElementById("filterPanel");
+
+        toggleFiltersBtn.addEventListener("click", () => {
+          const isOpen = filterPanel.classList.toggle("open");
+          toggleFiltersBtn.setAttribute("aria-expanded", String(isOpen));
+          toggleFiltersBtn.textContent = isOpen ? "✕ Hide Filters" : "⚙️ Show Filters";
+        });
+
+        // Filter & Sort Event Listeners
+        ["filterType", "filterSize", "filterColour", "filterPrice", "filterCity", "filterDate", "sortBy"].forEach((id) => {
+          document.getElementById(id).addEventListener("change", renderCatalogOutfits);
+        });
+
+        function resetAllFilters() {
+          document.getElementById("filterType").value = "all";
+          document.getElementById("filterSize").value = "all";
+          document.getElementById("filterColour").value = "all";
+          document.getElementById("filterPrice").value = "99999";
+          document.getElementById("filterCity").value = "all";
+          document.getElementById("filterDate").value = "";
+          document.getElementById("sortBy").value = "featured";
+          renderCatalogOutfits();
+        }
+
+        document.getElementById("resetFiltersBtn").addEventListener("click", resetAllFilters);
+        document.getElementById("emptyResetBtn").addEventListener("click", resetAllFilters);
+
+        // FAQ Accordion
+        document.querySelectorAll(".faq-question").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const item = btn.parentElement;
+            const isActive = item.classList.contains("active");
+
+            document.querySelectorAll(".faq-item").forEach((el) => {
+              el.classList.remove("active");
+              el.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+            });
+
+            if (!isActive) {
+              item.classList.add("active");
+              btn.setAttribute("aria-expanded", "true");
+            }
+          });
+        });
+
+        // Return Checklist Progress
+        const checkboxes = document.querySelectorAll(".return-check");
+        function updateChecklist() {
+          let checkedCount = 0;
+          checkboxes.forEach((cb) => {
+            const parent = cb.closest(".checklist-item");
+            if (cb.checked) {
+              checkedCount++;
+              parent.classList.add("checked");
+            } else {
+              parent.classList.remove("checked");
+            }
+          });
+          const statusEl = document.getElementById("checklistStatusText");
+          if (checkedCount === checkboxes.length) {
+            statusEl.textContent = "✓ Ready for rider pickup! 100% deposit refund queued.";
+          } else {
+            statusEl.textContent = `${checkedCount} of ${checkboxes.length} steps completed • Deposit protection active`;
+          }
+        }
+
+        checkboxes.forEach((cb) => cb.addEventListener("change", updateChecklist));
+        updateChecklist();
+
+        // Star Rating Selector & Review Form
+        const starBtns = document.querySelectorAll(".star-btn");
+        starBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            selectedStarRating = Number(btn.dataset.star);
+            starBtns.forEach((b) => {
+              b.classList.toggle("active", Number(b.dataset.star) <= selectedStarRating);
+            });
+          });
+        });
+
+        document.getElementById("postReviewForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const text = document.getElementById("reviewText").value.trim();
+          const display = document.getElementById("submittedReviewDisplay");
+          display.style.display = "block";
+          display.innerHTML = `
+            <div style="color:#8A6214; font-weight:600;">${"★".repeat(selectedStarRating)} (${selectedStarRating}/5) — Demo Review Posted</div>
+            <div style="margin-top:0.25rem; color:var(--color-charcoal);">“${text}”</div>
+          `;
+          e.target.reset();
+          showToast("Thank you! Your demo review has been recorded.");
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         10. INITIALIZE APPLICATION
+         ---------------------------------------------------------------------- */
+      document.addEventListener("DOMContentLoaded", () => {
+        applyUtmLinks();
+        renderFeaturedOutfits();
+        renderCatalogOutfits();
+        setupModalControls();
+        setupCheckoutHandlers();
+        setupLenderTools();
+        setupInteractiveUI();
+      });
+    })();
+  </script>
+</body>
+</html>
